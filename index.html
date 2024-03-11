@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>سمبوسة أم سمبوسك؟</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>هل تكتب سمبوسة أم سمبوسك؟</h1>
+        <div class="button-container">
+            <button id="sambosaBtn">سمبوسة</button>
+            <button id="sambouskBtn">سمبوسك</button>
+        </div>
+        <div class="result-container">
+            <p id="result">اختيارك لم يسجل بعد!</p>
+            <div class="progress-bar">
+                <div id="sambosaBar" class="progress-bar-fill"></div>
+                <div id="sambouskBar" class="progress-bar-fill"></div>
+            </div>
+        </div>
+    </div>
+    <script>
+const sambosaBtn = document.getElementById('sambosaBtn');
+const sambouskBtn = document.getElementById('sambouskBtn');
+const resultText = document.getElementById('result');
+const sambosaBar = document.getElementById('sambosaBar');
+const sambouskBar = document.getElementById('sambouskBar');
+
+let storedChoice = localStorage.getItem('userChoice');
+let sambosaCount = 0;
+let sambouskCount = 0;
+
+if (storedChoice === 'sambosa') {
+  sambosaCount++;
+  resultText.textContent = `اختيارك: سمبوسة`;
+} else if (storedChoice === 'sambousk') {
+  sambouskCount++;
+  resultText.textContent = `اختيارك: سمبوسك`;
+}
+
+function updateResult() {
+  const totalCount = sambosaCount + sambouskCount;
+  const sambosaPercentage = Math.round((sambosaCount / totalCount) * 100);
+  const sambouskPercentage = Math.round((sambouskCount / totalCount) * 100);
+  
+  sambosaBar.style.width = `${sambosaPercentage}%`;
+  sambouskBar.style.width = `${sambouskPercentage}%`;
+}
+
+sambosaBtn.addEventListener('click', () => {
+  sambosaCount++;
+  localStorage.setItem('userChoice', 'sambosa');
+  updateResult();
+});
+
+sambouskBtn.addEventListener('click', () => {
+  sambouskCount++;
+  localStorage.setItem('userChoice', 'sambousk');
+  updateResult();
+});
+
+updateResult();
+    </script>
+</body>
+</html>
